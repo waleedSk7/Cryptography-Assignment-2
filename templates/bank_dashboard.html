@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Bank Dashboard - Blockchain Ledger</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <style>
+      .block {
+        background-color: #161b22;
+        border: 1px solid #30363d;
+        border-radius: 6px;
+        margin: 1rem 0;
+        padding: 1rem;
+      }
+      .block h3 {
+        color: #58a6ff;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 0.5rem;
+      }
+      table th,
+      table td {
+        border: 1px solid #30363d;
+        padding: 0.5rem;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Bank Dashboard - Blockchain Ledger</h1>
+
+      {% if blockchain %}
+      <div class="blockchain">
+        {% for block in blockchain %}
+        <div class="block">
+          <h3>Block {{ loop.index0 }}</h3>
+          <p><strong>Timestamp:</strong> {{ block.timestamp }}</p>
+          <p><strong>Hash:</strong> {{ block.hash }}</p>
+          <p><strong>Previous Hash:</strong> {{ block.previous_hash }}</p>
+
+          {% if block.data.type == 'transaction' %}
+          <p><strong>Type:</strong> Transaction</p>
+          <table>
+            <tr>
+              <th>Merchant ID</th>
+              <th>User MMID</th>
+              <th>Amount</th>
+              <th>UPI PIN</th>
+            </tr>
+            <tr>
+              <td>{{ block.data.merchant_id }}</td>
+              <td>{{ block.data.user_details.mmid }}</td>
+              <td>{{ block.data.user_details.amount }}</td>
+              <td>{{ block.data.user_details.upi_pin }}</td>
+            </tr>
+          </table>
+          {% else %}
+          <pre>{{ block.data | tojson(indent=2) }}</pre>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <p>No blocks in the blockchain yet.</p>
+      {% endif %}
+
+      <br />
+      <a href="{{ url_for('index') }}">Return to Home</a>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Login - UPI Gateway</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>User Login</h1>
+    </header>
+
+    <main class="centered-content">
+      {% if not session.get('authenticated') %}
+      <form
+        action="{{ url_for('user_login') }}"
+        method="POST"
+        class="form-container"
+      >
+        <label for="user_id">User Name:</label>
+        <input type="text" name="user_id" id="user_id" required />
+
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required />
+
+        <button type="submit">Login</button>
+      </form>
+      {% if error %}
+      <p class="error">{{ error }}</p>
+      {% endif %} {% else %}
+      <p>Login successful! Would you like to initiate a transaction?</p>
+      <div class="transaction-options">
+        <form action="{{ url_for('initiate_transaction') }}" method="POST">
+          <button type="submit" name="choice" value="yes">Yes</button>
+          <button type="submit" name="choice" value="no">No</button>
+        </form>
+      </div>
+      {% endif %}
+    </main>
+
+    <footer>
+      <p>&copy; 2025 UPI Payment Gateway</p>
+    </footer>
+  </body>
+</html>

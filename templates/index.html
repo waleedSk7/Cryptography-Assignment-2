@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>UPI Payment Gateway - Home</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <!-- Google Font for modern look -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>Centralized UPI Payment Gateway</h1>
+      <nav>
+        <ul>
+          <li>
+            <a href="{{ url_for('merchant_register') }}">Merchant Portal</a>
+          </li>
+          <li>
+            <a href="{{ url_for('user_register') }}">User Registration</a>
+          </li>
+          <li><a href="{{ url_for('user_login') }}">User Login</a></li>
+          <li>
+            <a href="{{ url_for('generate_qr') }}"
+              >UPI Machine (QR Generation)</a
+            >
+          </li>
+          <li><a href="{{ url_for('view_blockchain') }}">Bank Dashboard</a></li>
+        </ul>
+      </nav>
+    </header>
+    <section class="content">
+      <!-- Updated welcome message wrapped in a class called 'welcome' -->
+      <p class="welcome">
+        Welcome to the UPI Payment Gateway system. Please choose your portal
+        from the menu above.
+      </p>
+    </section>
+    <footer>
+      <p>&copy; 2025 UPI Payment Gateway</p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Generate QR Code</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
+    <h1>Generate QR Code for Merchant</h1>
+    {% if error %}
+    <p class="error">{{ error }}</p>
+    {% endif %}
+    <form method="POST">
+      <label for="mid">Enter Merchant ID (MID):</label>
+      <input type="text" name="mid" required />
+      <br />
+      <button type="submit">Generate QR Code</button>
+    </form>
+    <a href="{{ url_for('index') }}">Return to Home</a>
+  </body>
+</html>

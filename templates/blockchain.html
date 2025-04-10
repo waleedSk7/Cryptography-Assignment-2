@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Bank Dashboard - Blockchain Ledger</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
+    <h1>Bank Dashboard - Blockchain Ledger</h1>
+    {% if error %}
+    <p class="error">{{ error }}</p>
+    {% else %}
+    <table>
+      <thead>
+        <tr>
+          <th>Index</th>
+          <th>Timestamp</th>
+          <th>Data</th>
+          <th>Hash</th>
+          <th>Previous Hash</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for block in chain %}
+        <tr>
+          <td>{{ block.index }}</td>
+          <td>{{ block.timestamp }}</td>
+          <td>{{ block.data }}</td>
+          <td>{{ block.hash }}</td>
+          <td>{{ block.previous_hash }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+    <a href="{{ url_for('index') }}">Return to Home</a>
+  </body>
+</html>

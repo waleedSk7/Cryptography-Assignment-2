@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Initiate Transaction</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
+    <h1>Initiate Transaction</h1>
+    <form method="POST">
+      <label for="vmid">VMID (from QR code):</label>
+      <input type="text" name="vmid" required />
+      <br />
+      <label for="amount">Transaction Amount:</label>
+      <input type="number" name="amount" step="0.01" required />
+      <br />
+      <label for="upi_pin">UPI PIN:</label>
+      <input type="password" name="upi_pin" required />
+      <br />
+      <button type="submit">Submit Transaction</button>
+    </form>
+    <a href="{{ url_for('index') }}">Return to Home</a>
+  </body>
+</html>
