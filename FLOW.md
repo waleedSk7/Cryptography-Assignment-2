@@ -217,23 +217,39 @@ This flow documentation provides a comprehensive overview of the UPI Payment Gat
 ### Shor's Algorithm Implementation
 
 1. **Initialization**
-   - Setup quantum simulation environment
-   - Define RSA parameters (modulus N, public exponent e)
-   - Prepare encrypted data for analysis
+   - Setup quantum simulation environment using Qiskit simulator
+   - Define small test parameters (N=15, a=7) for demonstration
+   - Explain how this scales to RSA parameters (modulus N, public exponent e)
+   - Prepare educational outputs to explain each step of the process
 
-2. **Quantum Period Finding**
-   - Find the period r such that a^r ≡ 1 (mod N)
-   - This is where quantum computers provide exponential speedup
-   - Classical computers need exponential time for this step
+2. **Quantum Circuit Construction**
+   - Create counting register (8 qubits) and target register (4 qubits)
+   - Initialize target register to |1⟩ state
+   - Apply Hadamard gates to create superposition in counting register
+   - Implement controlled modular exponentiation operations
+   - Apply inverse Quantum Fourier Transform using elementary gates
 
-3. **RSA Factorization**
-   - Use the period to find factors of RSA modulus
-   - Extract p and q from N where N = p × q
-   - Compute private key using Euler's totient function
+3. **Quantum Period Finding**
+   - Execute circuit on quantum simulator with 1024 shots
+   - Measure quantum states to obtain frequency distribution
+   - Convert measurement outcomes to phase estimates
+   - Use continued fraction expansion to find the period r
+   - Verify that a^r ≡ 1 (mod N)
 
-4. **Security Implication Analysis**
-   - Decrypt protected data using derived private key
-   - Demonstrate vulnerability of classical cryptography
-   - Propose quantum-resistant alternatives
+4. **Integer Factorization**
+   - Use the period to calculate potential factors: gcd(a^(r/2) ± 1, N)
+   - Successfully factor N=15 into its prime factors 3 and 5
+   - Demonstrate the quantum advantage: exponential speedup over classical methods
+   - Explain how this extends to larger integers used in RSA
+
+5. **Security Implication Analysis**
+   - Analyze how this threatens RSA-based cryptography in UPI systems
+   - Quantify the theoretical threat to different key sizes
+   - Demonstrate why current quantum computers are not yet a practical threat
+   - Propose quantum-resistant alternatives for future-proofing:
+     - Lattice-based cryptography
+     - Hash-based signatures
+     - Code-based cryptographic systems
+     - Multivariate polynomial cryptography
 
 

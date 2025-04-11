@@ -105,7 +105,7 @@ pip install -r requirements.txt
 ## Quantum Security Analysis
 
 To demonstrate potential security vulnerabilities to quantum computing:
-python quantum_vulnerability_test.py
+python shors_algorithm.py
 
 
 This simulation shows how Shor's algorithm could potentially break classical cryptography used in the system, emphasizing the need for quantum-resistant approaches.
