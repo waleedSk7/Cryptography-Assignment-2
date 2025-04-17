@@ -9,9 +9,10 @@ app = Flask(__name__)
 app.secret_key = "supersecretkey123!"  # Replace with a secure secret key
 
 # Configuration for connecting to backend services
-BANK_HOST = "127.0.0.1"
+# Update these IP addresses as necessary when deploying on different machines.
+BANK_HOST = "172.20.44.211"  # IP address of the Bank Server (Laptop A)
 BANK_PORT = 9000
-UPI_HOST = "127.0.0.1"
+UPI_HOST = "172.20.44.96"   # IP address of the UPI Machine (Laptop B)
 UPI_PORT = 9001
 
 def send_request(data, host, port):
@@ -38,7 +39,8 @@ def merchant_register():
             "name": request.form["name"],
             "password": request.form["password"],
             "initial_balance": request.form["initial_balance"],
-            "ifsc_code": request.form["ifsc_code"]
+            "ifsc_code": request.form["ifsc_code"],
+            "bank": request.form["bank"]  # New field for bank selection
         }
         response = send_request(data, BANK_HOST, BANK_PORT)
         if response.get("status") == "success":
@@ -56,7 +58,9 @@ def user_register():
             "password": request.form.get("password"),
             "mobile_number": request.form.get("mobile"),
             "upi_pin": request.form.get("pin"),
-            "initial_balance": request.form.get("initial_balance")
+            "initial_balance": request.form.get("initial_balance"),
+            "ifsc_code": request.form.get("ifsc_code"),  # New field for user IFSC code
+            "bank": request.form.get("bank")             # New field for bank selection
         }
         response = send_request(data, BANK_HOST, BANK_PORT)
         if response.get("status") == "success":
@@ -87,7 +91,6 @@ def user_login():
 def initiate_transaction():
     if "mmid" not in session:
         return redirect(url_for("user_login"))
-
     if request.method == "POST":
         data = {
             "type": "transaction_request",
@@ -120,6 +123,18 @@ def generate_qr():
         return render_template("generate_qr.html", error=response.get("message"))
     return render_template("generate_qr.html")
 
+# New Route: View all transactions
+@app.route("/view_transactions", methods=["GET"])
+def view_transactions():
+    data = {"type": "get_transactions"}
+    response = send_request(data, BANK_HOST, BANK_PORT)
+    if response.get("status") == "success":
+        transactions = response.get("transactions", [])
+        return render_template("transactions.html", transactions=transactions)
+    else:
+        return render_template("transaction_result.html", message=response.get("message"))
+
+# Optionally, you can also leave your existing blockchain view route if desired.
 @app.route('/view_blockchain', methods=['GET'])
 def view_blockchain():
     blockchain_file = 'blockchain.json'
@@ -128,8 +143,8 @@ def view_blockchain():
             blockchain = json.load(f)
     else:
         blockchain = []
-
     return render_template('bank_dashboard.html', blockchain=blockchain)
 
 if __name__ == "__main__":
+    # If you want to allow external access to the frontend, use host='0.0.0.0'
     app.run(debug=True, port=5000)

@@ -24,18 +24,21 @@
           <li>
             <a href="{{ url_for('user_register') }}">User Registration</a>
           </li>
-          <li><a href="{{ url_for('user_login') }}">User Login</a></li>
+          <li>
+            <a href="{{ url_for('user_login') }}">User Login</a>
+          </li>
           <li>
             <a href="{{ url_for('generate_qr') }}"
               >UPI Machine (QR Generation)</a
             >
           </li>
-          <li><a href="{{ url_for('view_blockchain') }}">Bank Dashboard</a></li>
+          <li>
+            <a href="{{ url_for('view_transactions') }}">View Transactions</a>
+          </li>
         </ul>
       </nav>
     </header>
     <section class="content">
-      <!-- Updated welcome message wrapped in a class called 'welcome' -->
       <p class="welcome">
         Welcome to the UPI Payment Gateway system. Please choose your portal
         from the menu above.

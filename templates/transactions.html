@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>All Transactions</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <style>
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid #333;
+      }
+      th,
+      td {
+        padding: 8px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>All Transactions</h1>
+    {% if transactions and transactions|length > 0 %}
+    <table>
+      <tr>
+        <th>Merchant ID</th>
+        <th>User MMID</th>
+        <th>Amount</th>
+        <th>UPI PIN</th>
+      </tr>
+      {% for tx in transactions %}
+      <tr>
+        <td>{{ tx.merchant_id }}</td>
+        <td>{{ tx.user_details.mmid }}</td>
+        <td>{{ tx.user_details.amount }}</td>
+        <td>{{ tx.user_details.upi_pin }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+    <p>No transactions found.</p>
+    {% endif %}
+    <br />
+    <a href="{{ url_for('index') }}">Return to Home</a>
+  </body>
+</html>

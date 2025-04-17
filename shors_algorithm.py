@@ -364,6 +364,8 @@ def run_simple_version(N, a):
 
 # Example usage
 if __name__ == "__main__":
+    import sys
+    
     print("="*60)
     print("      QUANTUM FACTORIZATION USING SHOR'S ALGORITHM")
     print("="*60)
@@ -372,10 +374,16 @@ if __name__ == "__main__":
     print("faster than the best known classical algorithms.")
     print("\nThis is implemented using Qiskit to simulate the quantum computation.")
     
-    # Try to factor N=15
-    N = 15
-    a = 7  # coprime with 15
-    print(f"\nWe'll factor N = {N} using base a = {7}")
+    # Get parameters from command line if provided, otherwise use defaults
+    if len(sys.argv) > 2:
+        N = int(sys.argv[1])
+        a = int(sys.argv[2])
+    else:
+        # Default values if not specified
+        N = 15
+        a = 4
+    
+    print(f"\nWe'll factor N = {N} using base a = {a}")
     print("(In a real application, we'd use much larger numbers like RSA keys)")
     
     factors = run_shor_algorithm(N, a)

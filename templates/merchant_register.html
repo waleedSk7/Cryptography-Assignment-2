@@ -7,6 +7,31 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
     />
+    <script>
+      // Mapping of banks to their respective IFSC codes
+      const bankToIfsc = {
+        ICICI: ["ICICI001", "ICICI002", "ICICI003"],
+        HDFC: ["HDFC001", "HDFC002", "HDFC003"],
+        SBI: ["SBI001", "SBI002", "SBI003"],
+      };
+
+      function updateIfscOptions() {
+        const bankSelect = document.getElementById("bank");
+        const ifscSelect = document.getElementById("ifsc_code");
+        const selectedBank = bankSelect.value;
+
+        // Clear previous options
+        ifscSelect.innerHTML = '<option value="">--Select IFSC Code--</option>';
+        if (selectedBank in bankToIfsc) {
+          bankToIfsc[selectedBank].forEach(function (code) {
+            const option = document.createElement("option");
+            option.value = code;
+            option.textContent = code;
+            ifscSelect.appendChild(option);
+          });
+        }
+      }
+    </script>
   </head>
   <body>
     <h1>Merchant Registration</h1>
@@ -15,17 +40,39 @@
     {% endif %}
     <form method="POST">
       <label for="name">Merchant Name:</label>
-      <input type="text" name="name" required />
+      <input type="text" name="name" id="name" required />
       <br />
+
       <label for="password">Password:</label>
-      <input type="password" name="password" required />
+      <input type="password" name="password" id="password" required />
       <br />
+
       <label for="initial_balance">Initial Balance:</label>
-      <input type="number" name="initial_balance" required />
+      <input
+        type="number"
+        name="initial_balance"
+        id="initial_balance"
+        required
+      />
       <br />
-      <label for="ifsc_code">IFSC Code:</label>
-      <input type="text" name="ifsc_code" required />
+
+      <!-- New dropdown for bank selection -->
+      <label for="bank">Select Bank:</label>
+      <select name="bank" id="bank" required onchange="updateIfscOptions()">
+        <option value="">--Select Bank--</option>
+        <option value="ICICI">ICICI</option>
+        <option value="HDFC">HDFC</option>
+        <option value="SBI">SBI</option>
+      </select>
       <br />
+
+      <!-- New dropdown for IFSC code selection -->
+      <label for="ifsc_code">Select IFSC Code:</label>
+      <select name="ifsc_code" id="ifsc_code" required>
+        <option value="">--Select IFSC Code--</option>
+      </select>
+      <br />
+
       <button type="submit">Register</button>
     </form>
     <a href="{{ url_for('index') }}">Return to Home</a>
